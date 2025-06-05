@@ -1,23 +1,24 @@
 # csv_sql / Documentation
----
 
 ## Contents
-1. [Register Table](#registerTable)
-   1.1 [LoadCSV](#LoadCSV)
-   1.2 [SetHeader](#SetHeader)
-   1.3 [SetTypes](#SetTypes)
-2. [Functions](#Functions)
-3. [SELECT](#SELECT)
-   2.1 [Select](#Select)
-   2.2 [As](#As)
-4. [FROM](#FROM)
-	3.1 [From](#From)
-	3.2 [Limit](#Limit)
-5. [WHERE](#WHERE)
-   4.1 [Where](#Where)
-----
+- [csv\_sql / Documentation](#csv_sql--documentation)
+	- [Contents](#contents)
+	- [1. Register Table](#1-register-table)
+		- [1.1 LoadCSV](#11-loadcsv)
+		- [1.2 SetHeader](#12-setheader)
+		- [1.3 SetTypes](#13-settypes)
+	- [2. Functions](#2-functions)
+	- [3. SELECT](#3-select)
+		- [3.1 Select](#31-select)
+		- [3.2 As](#32-as)
+	- [4. FROM](#4-from)
+		- [4.1 From](#41-from)
+		- [4.2 Limit](#42-limit)
+	- [5. WHERE](#5-where)
+		- [5.1 Where](#51-where)
+---
 
-## 1. Register Table<a name="registerTable"></a>
+## 1. Register Table
 ### 1.1 LoadCSV<a name="LoadCSV"></a>
 Used for registering a .csv file as a table.
 ```go
@@ -54,7 +55,7 @@ sql_csv.SetTypes("new_table", []string {"string", "int"} ) {}
 ```
 ---
 
-## 2. Functions<a name="Functions"></a>
+## 2. Functions
 	MIN  returns the smallest value within the selected column
 	MAX  returns the largest value within the selected column
 	COUNT  returns the number of rows in a set
@@ -62,8 +63,8 @@ sql_csv.SetTypes("new_table", []string {"string", "int"} ) {}
 	AVG  returns the average value of a numerical column
 ---
 
-## 3. SELECT<a name="SELECT"></a>
-### Select
+## 3. SELECT
+### 3.1 Select
 Select only the specified table columns, or all if "*" is passed.
 ```go
 func Select(fields ...string)  {}
@@ -77,7 +78,7 @@ sql_csv.Select("*")
 sql_csv.Select("Field_1", "Field_2")
 ```
 
-### As
+### 3.2 As
 Sets a name alias for selected columns of a table.
 Number of arguments must be less or equal to the number of [Select()]() arguments.
 If column should have no alias - use *nil* as argument.
@@ -95,8 +96,8 @@ sql_csv.Select("Field_1", "Field_2").As(nil, "Value2")
 ```
 ---
 
-## 4. FROM<a name="FROM"></a>
-### 4.1 From<a name="From"></a>
+## 4. FROM
+### 4.1 From
 Selects a table for query to be executed on.
 ```go
 func From(table string) {}
@@ -113,7 +114,7 @@ sql_csv.Select("Field_1").From("new_table")
 sql_csv.Select("Field_1").As("Value").From("new_table")
 ```
 
-### 4.2 Limit<a name="Limit"></a>
+### 4.2 Limit
 Used for limiting the number of result rows.
 ```go
 func Limit(limit int) {}
@@ -125,7 +126,8 @@ sql_csv.Select("*").From("new_table").Limit(5)
 ```
 ---
 
-## 5. WHERE<a name="WHERE"></a>
+## 5. WHERE
+### 5.1 Where
 ```json
 "(field_a > X OR field_b < Y) AND NOT field_c = Z"
 {
