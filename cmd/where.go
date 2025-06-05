@@ -1,8 +1,21 @@
 package csv_sql
 
 import (
-	"strings"
+	// "strings"
 )
+
+type LogicOperator int
+const (
+	NOT LogicOperator = iota
+	AND
+	OR
+)
+
+type LogicExpression struct {
+	op LogicOperator
+	field_a string
+	field_b string
+}
 
 
 type WhereQuery struct {
@@ -10,32 +23,31 @@ type WhereQuery struct {
 	Result []map[string]string
 }
 
+func parseLogic(condition string) []map[string]LogicExpression {
+	dict := []map[string]LogicExpression {}
+
+	// bracket_open := strings.Index(condition, "(")
+	// bracket_close := strings.Index(condition, ")")
+
+	// if bracket_open != -1 && bracket_close != -1 && bracket_open < bracket_close {
+	// 	brackets_dict := parseLogic(condition[bracket_open:bracket_close])
+	// } else if bracket_open == -1 && bracket_close == -1 {
+		
+	// } else {
+	// 	panic("Brackets error")
+	// }
+
+	return dict
+}
+
 
 func (q FromQuery) Where(condition string) WhereQuery {
 	// where_data := []map[string]string {}
 
-	if strings.Contains(condition, ">") {
-		condition = "GT"
-	} else if strings.Contains(condition, ">=") {
-		condition = "GTE"
-	} else if strings.Contains(condition, "<") {
-		condition = "LT"
-	} else if strings.Contains(condition, "<=") {
-		condition = "LTE"
-	} else if strings.Contains(condition, "==") {
-		condition = "E"
-	} else if strings.Contains(condition, "!=") {
-		condition = "NE"
-	} else {
-		condition = ""
-		panic("unknown comparison operator")
-	}
+	// * ORDER:
+	// () NOT AND OR >< math
 
-	// for _, row := range q.data {
-	// 	if 
-
-	// 	where_data = append(where_data, select_fields)
-	// }
+	// dict := parseLogic(condition)
 
 	var result []map[string]string
 

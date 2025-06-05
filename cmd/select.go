@@ -9,7 +9,7 @@ type SelectQuery struct {
 }
 
 func Select(fields ...string) SelectQuery {
-	if _DEBUG {
+	if DEBUG {
 		println("[_DEBUG] Select")
 	}
 
@@ -33,7 +33,7 @@ func Select(fields ...string) SelectQuery {
 }
 
 func (q SelectQuery) As(fields ...string) SelectQuery {
-	if _DEBUG {
+	if DEBUG {
 		println("[_DEBUG] As")
 	}
 

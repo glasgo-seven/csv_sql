@@ -5,6 +5,13 @@ import (
 	"os"
 	"strings"
 	"slices"
+	"fmt"
+)
+
+const (
+	PRINT_ID_CELL_FORMAT_D string = "%-6d"
+	PRINT_ID_CELL_FORMAT_S string = "%-6s"
+	PRINT_FIELD_CELL_FORMAT string = "%-16s"
 )
 
 
@@ -13,23 +20,23 @@ type Table struct {
 	data []map[string]string
 }
 func (t Table) Print() {
-	if _DEBUG {
+	if DEBUG {
 		println("[_DEBUG] Print\n")
 	}
 	
-	print("_id\t")
+	fmt.Printf(PRINT_ID_CELL_FORMAT_S, "_id")
 	for field := range t.header {
-		print(t.header[field], "\t")
+		fmt.Printf(PRINT_FIELD_CELL_FORMAT, t.header[field])
 	}
 	print("\n")
 
 	for i, object := range t.data {
-		print(i+1, "\t")
+		fmt.Printf(PRINT_ID_CELL_FORMAT_D, i+1)
 		// for key, value := range object {
 		// 	println("\t", key, "\t", value)
 		// }
 		for field := range t.header {
-			print(object[t.header[field]], "\t")
+			fmt.Printf(PRINT_FIELD_CELL_FORMAT, object[t.header[field]])
 		}
 		print("\n")
 	}
@@ -37,7 +44,7 @@ func (t Table) Print() {
 
 
 func ParseCSV(fileName string, delimiter string, hasHeader bool) Table {
-	if _DEBUG {
+	if DEBUG {
 		println("[_DEBUG] ParseCSV")
 	}
 
@@ -87,12 +94,16 @@ func ParseCSV(fileName string, delimiter string, hasHeader bool) Table {
 }
 
 
-func formResult(data []map[string]string, _select []string, _as []string, _limit int) []map[string]string {
-	if _DEBUG {
+func formResult(data []map[string]string, _select []string, _as []string, _limit int) Table {
+	if DEBUG {
 		println("[_DEBUG] formResult")
+		print("SELECT ")
+		print_array(_select)
+		print("AS ")
+		print_array(_as)
 	}
 
-	result := []map[string]string {}
+	result_data := []map[string]string {}
 
 	for i, row := range data {
 		if i == _limit {
@@ -102,20 +113,28 @@ func formResult(data []map[string]string, _select []string, _as []string, _limit
 		select_fields := map[string]string {}
 
 		for key, value := range row {
-			if slices.Contains(_select, key) {
-				as_index := slices.Index(_select, key)
+			as_index := slices.Index(_select, key)
+			
+			if as_index != -1 {
 				if len(_as) == 0 || as_index >= len(_as) {
 					select_fields[key] = value
+					// result_header = append(result_header, key)
 				} else {
 					select_fields[_as[as_index]] = value
+					// result_header = append(result_header, _as[as_index])
 				}
 			}
 		}
 
 		if len(select_fields) != 0 {
-			result = append(result, select_fields)
+			result_data = append(result_data, select_fields)
 		}
 	}
 
-	return result
+	result_header := slices.Concat(_as, _select[len(_as):])
+
+	return Table{
+		data: result_data,
+		header: result_header,
+	}
 }
