@@ -1,9 +1,8 @@
 package main
 
 import (
-	"csv_sql/cmd"
+	"csv_sql"
 )
-
 
 func main() {
 	// Set debug mode
@@ -13,7 +12,7 @@ func main() {
 	table := csv_sql.ParseCSV("./rsc/file.csv", ",", true)
 
 	// Use SQL syntax formed as a chain of methods
-	result := csv_sql.Select("Score").As("Value").
+	result := csv_sql.Select("*").
 				From(table).
 				Limit(5).
 				Result

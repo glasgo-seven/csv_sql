@@ -18,7 +18,7 @@ func Select(fields ...string) SelectQuery {
 			panic("Can only use \"*\" without other fields.")
 		} else {
 			return SelectQuery{
-				selected_fields: []string {},
+				selected_fields: []string {"*"},
 				as_fields: []string {},
 				is_all: true,
 			}
