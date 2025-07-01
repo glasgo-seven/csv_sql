@@ -1,15 +1,6 @@
 # csv_sql - SQL syntax for .csv files
 
-## Documentation - [link](./docs.md)
+## Documentation - [link](./docs/docs.md)
 
-### TODO
-**Major:**
-- [ ] pretty print
-- [ ] when as is shorted then select - only as fields will be shown
-- [ ] where
-- [ ] group by
-- [ ] sort by
-
-**Minor:**
-- [ ] top queries that start not with select
-- [ ] csv_viewer app GUI
+### Road Map
+![Project Road Map](./internal/rsc/Road%20Map.png)
